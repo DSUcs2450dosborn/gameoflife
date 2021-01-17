@@ -44,15 +44,24 @@ function gameOfLife () {
         }
     }
     // Update the state
+
     state = result
+    debugger;
 }
 // Use button A for the next iteration of game of life
 input.onButtonPressed(Button.A, function () {
+    priorstate = state.slice()
+//    debugger;
     gameOfLife()
-    if ( state == priorstate ){
+    debugger;
+    if ( isDead() ){
         showERR()
     } else {
-        show()
+        if ( isSame() ){
+            showERR()
+        } else {
+            show()
+        }
     }
 })
 // Use button B for reseting to random initial seed state
@@ -73,10 +82,17 @@ function show () {
 function showERR () {
     for (let x2 = 0; x2 <= 4; x2++) {
         for (let y2 = 0; y2 <= 4; y2++) {
-            lifeChart.setPixel(x2, y2, getState(state, x2, y2));
+            if (getState(priorstate, x2, y2)) {
+                lifeChart.setPixel(x2, y2, false );
+            } else {
+                lifeChart.setPixel(x2, y2, true );
+            }
         }
     }
     lifeChart.plotImage(0);
+    basic.pause(500)
+    reset()
+    show()
 }
 // Generate random initial state.
 function reset () {
@@ -86,11 +102,24 @@ function reset () {
         }
     }
 }
+// compare array
+function isDead() {
+    debugger;
+    return state.every((val, index) => val === deadstate[index]);
+}
+
+function isSame() {
+    debugger;
+    return state.every((val, index) => val === priorstate[index]);
+}
 /**
  * https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
  */
+
+
 let state: boolean[] = []
 let priorstate: boolean[] = []
+let deadstate: boolean[] = []
 let lifeChart: Image = null
 let count = 0
 let result: boolean[] = []
@@ -104,6 +133,7 @@ lifeChart = images.createImage(`
 // State holds the information about pixel is live or dead
 // false means dead, true means live.
 state = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+deadstate  = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 function getState(arr: boolean[], x: number, y: number): boolean {
     return arr[x * 5 + y];
 }
