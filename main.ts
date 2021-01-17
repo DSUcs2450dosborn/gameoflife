@@ -160,6 +160,9 @@ function showERR () {
         basic.showString("Score:")
         basic.showNumber(score)
         for (let x = 0; x <= 25; x++) {
+            if (input.isGesture(Gesture.Shake)) {
+                break
+            }
             flickerLogo()
         }
     } else {
