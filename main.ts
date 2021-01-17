@@ -1,7 +1,26 @@
-// compare array
+//  micro:bit adaptation of Conways life
+//  DES4990-02 SP 2021    Douglas Osborn
+
+//  Maximize score by cycling pattern via Button A pushes 
+//  Rescue critical pattern via Button B pushes 
+//  Reset game after loss by shake 
+
+// compare array to empty
 function isDead () {
-    // debugger;
     return state.every((val, index) => val === deadstate[index])
+}
+// compare array to prior
+function isSame () {
+    // debugger;
+    return state.every((val, index) => val === priorstate[index])
+}
+// get current LED display
+function getState(arr: boolean[], x: number, y: number): boolean {
+    return arr[x * 5 + y];
+}
+// set LED display values
+function setState(arr: boolean[], x: number, y: number, value: boolean): void {
+    arr[x * 5 + y] = value;
 }
 // Core function
 function gameOfLife () {
@@ -50,16 +69,12 @@ function gameOfLife () {
     }
     // Update the state
     state = result
-//    debugger;
 }
 // Use button A for the next iteration of game of life
 input.onButtonPressed(Button.A, function () {
-//    debugger;
     if ( playerLives > 0){
         priorstate = state.slice()
-// debugger;
         gameOfLife()
-    // debugger;
         if (isDead()) {
             showERR()
         } else {
@@ -71,10 +86,7 @@ input.onButtonPressed(Button.A, function () {
         }
     }
 })
-function isSame () {
-    // debugger;
-    return state.every((val, index) => val === priorstate[index])
-}
+
 // Use button B for reseting to random initial seed state
 input.onButtonPressed(Button.B, function () {
     if (playerLives > 0) {
@@ -170,12 +182,7 @@ let logo = images.createImage(`
 // false means dead, true means live.
 state = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 deadstate  = state.slice()
-function getState(arr: boolean[], x: number, y: number): boolean {
-    return arr[x * 5 + y];
-}
-function setState(arr: boolean[], x: number, y: number, value: boolean): void {
-    arr[x * 5 + y] = value;
-}
+
 // Initial reset & show
 reset()
 show()
