@@ -153,6 +153,7 @@ function showERR () {
     basic.pause(125)
     errMask.plotImage(0);
     basic.pause(125)
+    ledBlank.plotImage(0);
     playerLives -=1
     debugger;
     basic.pause(500)
@@ -173,6 +174,7 @@ function showERR () {
 }
 // Generate random initial state.
 function reset () {
+    ledBlank.plotImage(0);
     for (let x = 0; x <= 4; x++) {
         for (let y = 0; y <= 4; y++) {
             setState(state, x, y, Math.randomBoolean());
@@ -188,6 +190,7 @@ let count = 0
 let playerLives = 3
 let lifeChart: Image = null
 let errMask: Image = null
+let ledBlank: Image = null
 let logo: boolean[] = []
 let deadstate: boolean[] = []
 let priorstate: boolean[] = []
@@ -208,6 +211,13 @@ errMask = images.createImage(`
     . . . . .
     `)
 
+ledBlank = images.createImage(`
+    . . . . .
+    . . . . .
+    . . . . .
+    . . . . .
+    . . . . .
+    `)
 
 // State holds the information about pixel is live or dead
 // deadstate is ALL dead
