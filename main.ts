@@ -120,13 +120,26 @@ function showERR () {
     for (let x22 = 0; x22 <= 4; x22++) {
         for (let y22 = 0; y22 <= 4; y22++) {
             if (getState(priorstate, x22, y22)) {
-                lifeChart.setPixel(x22, y22, false );
+                errMask.setPixel(x22, y22, false );
             } else {
-                lifeChart.setPixel(x22, y22, true );
+                errMask.setPixel(x22, y22, true );
             }
         }
     }
+    errMask.plotImage(0);
+    for (let x2 = 0; x2 <= 4; x2++) {
+        for (let y2 = 0; y2 <= 4; y2++) {
+            lifeChart.setPixel(x2, y2, getState(state, x2, y2));
+        }
+    }
     lifeChart.plotImage(0);
+    basic.pause(125)
+    errMask.plotImage(0);
+    basic.pause(125)
+    lifeChart.plotImage(0);
+    basic.pause(125)
+    errMask.plotImage(0);
+    basic.pause(125)
     playerLives -=1
     debugger;
     basic.pause(500)
@@ -135,7 +148,7 @@ function showERR () {
         basic.showNumber(score)
         logo.plotImage(0)
     } else {
-        basic.pause(1500)
+        basic.pause(80)
         reset()
         show()
     }
@@ -156,6 +169,7 @@ let result: boolean[] = []
 let count = 0
 let playerLives = 3
 let lifeChart: Image = null
+let errMask: Image = null
 let deadstate: boolean[] = []
 let priorstate: boolean[] = []
 let state: boolean[] = []
@@ -167,13 +181,21 @@ lifeChart = images.createImage(`
     . . . . .
     `)
 
+errMask = images.createImage(`
+    . . . . .
+    . . . . .
+    . . . . .
+    . . . . .
+    . . . . .
+    `)
+
 let logo = images.createImage(`
-. # # # .
-# . # . #
-# . . . #
-# . # . #
-. # # # .
-`)
+    . # # # .
+    # . # . #
+    # . . . #
+    # . # . #
+    . # # # .
+    `)
 
 
 // State holds the information about pixel is live or dead
