@@ -22,6 +22,19 @@ function getState(arr: boolean[], x: number, y: number): boolean {
 function setState(arr: boolean[], x: number, y: number, value: boolean): void {
     arr[x * 5 + y] = value;
 }
+
+function flickerLogo () {
+    for (let x22 = 0; x22 <= 4; x22++) {
+        for (let y22 = 0; y22 <= 4; y22++) {
+            if (getState(logo, x22, y22)) {
+                led.plotBrightness(x22, y22, randint(0, 255)) 
+                basic.pause(50)              
+            } 
+        }
+    }
+    basic.pause(500)
+}
+
 // Core function
 function gameOfLife () {
     for (let x3 = 0; x3 <= 4; x3++) {
@@ -146,7 +159,9 @@ function showERR () {
     if ( playerLives < 1) {
         basic.showString("Score:")
         basic.showNumber(score)
-        logo.plotImage(0)
+        for (let x = 0; x <= 25; x++) {
+            flickerLogo()
+        }
     } else {
         basic.pause(80)
         reset()
@@ -170,6 +185,7 @@ let count = 0
 let playerLives = 3
 let lifeChart: Image = null
 let errMask: Image = null
+let logo: boolean[] = []
 let deadstate: boolean[] = []
 let priorstate: boolean[] = []
 let state: boolean[] = []
@@ -189,14 +205,6 @@ errMask = images.createImage(`
     . . . . .
     `)
 
-let logo = images.createImage(`
-    . # # # .
-    # . # . #
-    # . . . #
-    # . # . #
-    . # # # .
-    `)
-
 
 // State holds the information about pixel is live or dead
 // deadstate is ALL dead
@@ -204,6 +212,7 @@ let logo = images.createImage(`
 // false means dead, true means live.
 state = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 deadstate  = state.slice()
+logo = [false, true, true, true, false, true, false, true, false, true, true, false, false, false, true, true, false, true, false, true, false, true, true, true, false]
 
 // Initial reset & show
 reset()
