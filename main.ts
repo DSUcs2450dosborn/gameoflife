@@ -162,7 +162,7 @@ function showERR () {
         basic.showNumber(score)
         for (let x = 0; x <= 25; x++) {
             if (input.isGesture(Gesture.Shake)) {
-                break
+                break;
             }
             flickerLogo()
         }
