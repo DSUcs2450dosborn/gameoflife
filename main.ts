@@ -49,7 +49,11 @@ function gameOfLife () {
 // Use button A for the next iteration of game of life
 input.onButtonPressed(Button.A, function () {
     gameOfLife()
-    show()
+    if ( state == priorstate ){
+        showERR()
+    } else {
+        show()
+    }
 })
 // Use button B for reseting to random initial seed state
 input.onButtonPressed(Button.B, function () {
@@ -58,6 +62,15 @@ input.onButtonPressed(Button.B, function () {
 })
 // Show the lifeChart based on the state
 function show () {
+    for (let x2 = 0; x2 <= 4; x2++) {
+        for (let y2 = 0; y2 <= 4; y2++) {
+            lifeChart.setPixel(x2, y2, getState(state, x2, y2));
+        }
+    }
+    lifeChart.plotImage(0);
+}
+// blink INVERSE of the lifeChart based on the state
+function showERR () {
     for (let x2 = 0; x2 <= 4; x2++) {
         for (let y2 = 0; y2 <= 4; y2++) {
             lifeChart.setPixel(x2, y2, getState(state, x2, y2));
@@ -77,6 +90,7 @@ function reset () {
  * https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
  */
 let state: boolean[] = []
+let priorstate: boolean[] = []
 let lifeChart: Image = null
 let count = 0
 let result: boolean[] = []
