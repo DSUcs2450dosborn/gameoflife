@@ -53,7 +53,7 @@ input.onButtonPressed(Button.A, function () {
     priorstate = state.slice()
 //    debugger;
     gameOfLife()
-    debugger;
+//    debugger;
     if ( isDead() ){
         showERR()
     } else {
@@ -77,6 +77,7 @@ function show () {
         }
     }
     lifeChart.plotImage(0);
+    score += 1
 }
 // blink INVERSE of the lifeChart based on the state
 function showERR () {
@@ -91,6 +92,9 @@ function showERR () {
     }
     lifeChart.plotImage(0);
     basic.pause(500)
+    basic.showNumber(score)
+    basic.pause(1500)
+    score = 0
     reset()
     show()
 }
@@ -104,12 +108,12 @@ function reset () {
 }
 // compare array
 function isDead() {
-    debugger;
+//    debugger;
     return state.every((val, index) => val === deadstate[index]);
 }
 
 function isSame() {
-    debugger;
+//    debugger;
     return state.every((val, index) => val === priorstate[index]);
 }
 /**
@@ -122,6 +126,7 @@ let priorstate: boolean[] = []
 let deadstate: boolean[] = []
 let lifeChart: Image = null
 let count = 0
+let score = 0
 let result: boolean[] = []
 lifeChart = images.createImage(`
     . . . . .
@@ -130,16 +135,21 @@ lifeChart = images.createImage(`
     . . . . .
     . . . . .
     `)
+
 // State holds the information about pixel is live or dead
+// deadstate is ALL dead
+// priorstate is used to check if pattern is stable.   universe size apparently prevents blinkers
 // false means dead, true means live.
 state = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-deadstate  = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+deadstate  = state.slice()
+
 function getState(arr: boolean[], x: number, y: number): boolean {
     return arr[x * 5 + y];
 }
 function setState(arr: boolean[], x: number, y: number, value: boolean): void {
     arr[x * 5 + y] = value;
 }
+
 // Initial reset & show
 reset()
 show()
