@@ -27,6 +27,18 @@ function getState(arr: boolean[], x: number, y: number): boolean {
 function setState(arr: boolean[], x: number, y: number, value: boolean): void {
     arr[x * 5 + y] = value;
 }
+// Enable button 1
+function bOneEnable(){
+    if (playerLives > 0){
+        inButton1 = enabled
+    }
+}
+// Enable button 2
+function bTwoEnable(){
+    if (powerUps > 0){
+        inButton2 = enabled
+    }
+}
 // Generate inverse screen for flashing 
 function makeErrMask() {
     for (let x22 = 0; x22 <= 4; x22++) {
@@ -42,18 +54,13 @@ function makeErrMask() {
 
 function flickerLogo () {
     for (let x = 0; x <= 5; x++) {
-        if (input.isGesture(Gesture.Shake)) {
-            x=5
-            ledBlank.plotImage(0);
-            break;
-        }
         if (x==5){
             ledBlank.plotImage(0);
         }
         for (let x22 = 0; x22 <= 4; x22++) {
             for (let y22 = 0; y22 <= 4; y22++) {
                 if (getState(logo, x22, y22)) {
-                    led.plotBrightness(x22, y22, randint(92, 192)) 
+                    led.plotBrightness(x22, y22, randint(128, 255)) 
                     basic.pause(20)              
                 } else {
                     if (x==5){
@@ -118,7 +125,8 @@ function gameOfLife () {
 }
 // Use button A for the next iteration of game of life
 input.onButtonPressed(Button.A, function () {
-    if ( playerLives > 0){
+    if ( inButton1 ){
+        inButton1 = disabled
         priorstate = state.slice()
         gameOfLife()
         checkState()
@@ -127,7 +135,8 @@ input.onButtonPressed(Button.A, function () {
 
 // Use button B for reseting to random initial seed state
 input.onButtonPressed(Button.B, function () {
-    if ( powerUps > 0) {
+    if ( inButton2 ) {
+        inButton2 = disabled
         powerUps -= 1
         if (playerLives > 0) {
             reset()
@@ -136,19 +145,18 @@ input.onButtonPressed(Button.B, function () {
     }
 })
 
-input.onGesture(Gesture.Shake, function () {
-	
+input.onGesture(Gesture.Shake, function () {	
     if (inShake) {
+        inShake = disabled
         playerLives = 4
         powerUps = 3
         score = 0
-        inShake = disabled
         reset()
         show()
     } 
 })
 
-// Show the lifeChart based on the state
+// Show the ledArray based on the state
 function show () {
     for (let x2 = 0; x2 <= 4; x2++) {
         for (let y2 = 0; y2 <= 4; y2++) {
@@ -156,6 +164,9 @@ function show () {
         }
     }
     ledArray.plotImage(0);
+
+    bOneEnable()
+    bTwoEnable()
 }
 // blink INVERSE of the lifeChart based on the state
 function showERR () {
