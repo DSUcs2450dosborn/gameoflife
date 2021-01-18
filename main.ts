@@ -159,16 +159,7 @@ function showERR () {
         }
     }
 
-    errMask.plotImage(0);
-    lifeChart.plotImage(0);
-    basic.pause(125)
-    errMask.plotImage(0);
-    basic.pause(125)
-    lifeChart.plotImage(0);
-    basic.pause(125)
-    errMask.plotImage(0);
-    basic.pause(125)
-    ledBlank.plotImage(0);
+    flashErr()
 
     playerLives -=1
     debugger;
@@ -193,9 +184,33 @@ function reset () {
     }
 }
 
+function flashErr(){
+    errMask.plotImage(0);
+    lifeChart.plotImage(0);
+    basic.pause(125)
+    errMask.plotImage(0);
+    basic.pause(125)
+    lifeChart.plotImage(0);
+    basic.pause(125)
+    errMask.plotImage(0);
+    basic.pause(125)
+    ledBlank.plotImage(0);    
+}
+
 function checkState() {
     if ( isLogo() ){
-        powerUps += 1
+        for (let x22 = 0; x22 <= 4; x22++) {
+            for (let y22 = 0; y22 <= 4; y22++) {
+                if (getState(priorstate, x22, y22)) {
+                    errMask.setPixel(x22, y22, false );
+                } else {
+                    errMask.setPixel(x22, y22, true );
+                }
+            }
+        }
+        flashErr()
+        reset()
+        show()
     }
     if (isDead()) {
         showERR()
