@@ -164,10 +164,7 @@ function showERR () {
     playerLives -=1
     basic.pause(500)
     if ( playerLives < 1) {
-        basic.showString("WIN")
-        basic.showNumber(score)
-        flickerLogo() 
-        inShake = enabled      
+        showScore()
     } else {
         basic.pause(80)
         reset()
@@ -218,7 +215,19 @@ function checkState() {
             show()
         }
     }
+}
 
+function showScore() {
+        basic.showString("WIN")
+        let bonus = input.temperature()*2
+//        basic.showNumber(bonus) 
+        if (score >= bonus){
+            basic.showString("x2")
+            score = score * 2
+        }
+        basic.showNumber(score)
+        flickerLogo()    
+        inShake = enabled  
 }
 /**
  * https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
