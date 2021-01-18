@@ -118,9 +118,12 @@ input.onButtonPressed(Button.A, function () {
 
 // Use button B for reseting to random initial seed state
 input.onButtonPressed(Button.B, function () {
-    if (playerLives > 0) {
-        reset()
-        show()
+    if ( powerUps > 0) {
+        powerUps -= 1
+        if (playerLives > 0) {
+            reset()
+            show()
+        }
     }
 })
 
@@ -128,6 +131,7 @@ input.onGesture(Gesture.Shake, function () {
     debugger;	
     if (playerLives < 1) {
         playerLives = 3
+        powerUps = 3
         score = 0
         reset()
         show()
@@ -198,6 +202,7 @@ let score = 0
 let result: boolean[] = []
 let count = 0
 let playerLives = 3
+let powerUps = 3
 let lifeChart: Image = null
 let errMask: Image = null
 let ledBlank: Image = null
