@@ -14,6 +14,11 @@ function isSame () {
     // debugger;
     return state.every((val, index) => val === priorstate[index])
 }
+// compare array to LOGO
+function isLogo () {
+    // debugger;
+    return state.every((val, index) => val === logo[index])
+}
 // get current LED display
 function getState(arr: boolean[], x: number, y: number): boolean {
     return arr[x * 5 + y];
@@ -104,15 +109,7 @@ input.onButtonPressed(Button.A, function () {
     if ( playerLives > 0){
         priorstate = state.slice()
         gameOfLife()
-        if (isDead()) {
-            showERR()
-        } else {
-            if (isSame()) {
-                showERR()
-            } else {
-                show()
-            }
-        }
+        checkState()
     }
 })
 
@@ -120,10 +117,10 @@ input.onButtonPressed(Button.A, function () {
 input.onButtonPressed(Button.B, function () {
     if ( powerUps > 0) {
         powerUps -= 1
-        if (playerLives > 0) {
+//        if (playerLives > 0) {
             reset()
             show()
-        }
+//        }
     }
 })
 
@@ -194,6 +191,22 @@ function reset () {
             setState(state, x, y, Math.randomBoolean());
         }
     }
+}
+
+function checkState() {
+    if ( isLogo() ){
+        powerUps += 1
+    }
+    if (isDead()) {
+        showERR()
+    } else {
+        if (isSame()) {
+            showERR()
+        } else {
+            show()
+        }
+    }
+
 }
 /**
  * https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
