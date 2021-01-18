@@ -243,5 +243,6 @@ deadstate  = state.slice()
 logo = [false, true, true, true, false, true, false, true, false, true, true, false, false, false, true, true, false, true, false, true, false, true, true, true, false]
 
 // Initial reset & show
+flickerLogo()
 reset()
 show()
