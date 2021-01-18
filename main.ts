@@ -27,12 +27,15 @@ function flickerLogo () {
     for (let x22 = 0; x22 <= 4; x22++) {
         for (let y22 = 0; y22 <= 4; y22++) {
             if (getState(logo, x22, y22)) {
-                led.plotBrightness(x22, y22, randint(0, 255)) 
-                basic.pause(50)              
+                led.plotBrightness(x22, y22, randint(128, 255)) 
+                basic.pause(20)              
+            } else {
+                led.plotBrightness(x22, y22, randint(16, 92))
+                basic.pause(20)                    
             } 
         }
     }
-    basic.pause(500)
+
 }
 
 // Core function
@@ -158,11 +161,12 @@ function showERR () {
     debugger;
     basic.pause(500)
     if ( playerLives < 1) {
-        basic.showString("Score:")
+        basic.showString("AGE:")
         basic.showNumber(score)
         for (let x = 0; x <= 25; x++) {
             if (input.isGesture(Gesture.Shake)) {
                 x=25
+                ledBlank.plotImage(0);
                 break;
             }
             flickerLogo()
