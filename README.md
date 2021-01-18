@@ -6,11 +6,12 @@ This is an adaptation of the Conway Game of Life demonstration project available
 
 [https://makecode.microbit.org/examples/gameofLife/](https://makecode.microbit.org/examples/gameofLife)
 
-Player uses button A to cycle the LED "universe" to the next "Conway stage".
+#### GamePlay
+Player uses button A to cycle the LED "universe" to the next "Conway stage". Each cycle increments player score.
 Cycling to an empty universe or when the next cycle will duplicate the current costs 1 of the players 5 lives
-Players can avoid the "death penalty" 3 times by using button B to trigger a reset.
+Players can avoid the "death penalty" 3 times by using button B to trigger a universe reset.
 Players start with 3 resets, but can earn extras if the current universe pattern matches the game logo
-After all player deaths are exhausted, a new game can be started by shaking the unit when the logo is displayed
+After all player deaths are exhausted, a new game can be started by shaking the unit after the logo is displayed
 
 ## Use as Extension
 
