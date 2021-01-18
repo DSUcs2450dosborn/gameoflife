@@ -24,13 +24,13 @@ function setState(arr: boolean[], x: number, y: number, value: boolean): void {
 }
 
 function flickerLogo () {
-    for (let x = 0; x <= 15; x++) {
+    for (let x = 0; x <= 5; x++) {
         if (input.isGesture(Gesture.Shake)) {
             x=15
             ledBlank.plotImage(0);
             break;
         }
-        if (x==15){
+        if (x==5){
             ledBlank.plotImage(0);
         }
         for (let x22 = 0; x22 <= 4; x22++) {
