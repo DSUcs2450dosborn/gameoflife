@@ -27,6 +27,18 @@ function getState(arr: boolean[], x: number, y: number): boolean {
 function setState(arr: boolean[], x: number, y: number, value: boolean): void {
     arr[x * 5 + y] = value;
 }
+// Generate inverse screen for flashing 
+function makeErrMask() {
+    for (let x22 = 0; x22 <= 4; x22++) {
+        for (let y22 = 0; y22 <= 4; y22++) {
+            if (getState(priorstate, x22, y22)) {
+                errMask.setPixel(x22, y22, false );
+            } else {
+                errMask.setPixel(x22, y22, true );
+            }
+        }
+    }
+}
 
 function flickerLogo () {
     for (let x = 0; x <= 5; x++) {
@@ -125,11 +137,12 @@ input.onButtonPressed(Button.B, function () {
 })
 
 input.onGesture(Gesture.Shake, function () {
-    debugger;	
-    if (playerLives < 1) {
-        playerLives = 3
+	
+    if (inShake) {
+        playerLives = 4
         powerUps = 3
         score = 0
+        inShake = disabled
         reset()
         show()
     } 
@@ -139,35 +152,22 @@ input.onGesture(Gesture.Shake, function () {
 function show () {
     for (let x2 = 0; x2 <= 4; x2++) {
         for (let y2 = 0; y2 <= 4; y2++) {
-            lifeChart.setPixel(x2, y2, getState(state, x2, y2));
+            ledArray.setPixel(x2, y2, getState(state, x2, y2));
         }
     }
-    lifeChart.plotImage(0);
-    score += 1
+    ledArray.plotImage(0);
 }
 // blink INVERSE of the lifeChart based on the state
 function showERR () {
-
-    for (let x22 = 0; x22 <= 4; x22++) {
-        for (let y22 = 0; y22 <= 4; y22++) {
-            lifeChart.setPixel(x22, y22, getState(priorstate, x22, y22));
-            if (getState(priorstate, x22, y22)) {
-                errMask.setPixel(x22, y22, false );
-            } else {
-                errMask.setPixel(x22, y22, true );
-            }
-        }
-    }
-
+    makeErrMask()
     flashErr()
-
     playerLives -=1
-    debugger;
     basic.pause(500)
     if ( playerLives < 1) {
         basic.showString("WIN")
         basic.showNumber(score)
-        flickerLogo()       
+        flickerLogo() 
+        inShake = enabled      
     } else {
         basic.pause(80)
         reset()
@@ -186,11 +186,11 @@ function reset () {
 
 function flashErr(){
     errMask.plotImage(0);
-    lifeChart.plotImage(0);
+    ledArray.plotImage(0);
     basic.pause(125)
     errMask.plotImage(0);
     basic.pause(125)
-    lifeChart.plotImage(0);
+    ledArray.plotImage(0);
     basic.pause(125)
     errMask.plotImage(0);
     basic.pause(125)
@@ -198,26 +198,23 @@ function flashErr(){
 }
 
 function checkState() {
+    // do free reset if current screen = logo
     if ( isLogo() ){
-        for (let x22 = 0; x22 <= 4; x22++) {
-            for (let y22 = 0; y22 <= 4; y22++) {
-                if (getState(priorstate, x22, y22)) {
-                    errMask.setPixel(x22, y22, false );
-                } else {
-                    errMask.setPixel(x22, y22, true );
-                }
-            }
-        }
+        makeErrMask()
         flashErr()
         reset()
         show()
     }
+    // check for empty screen death
     if (isDead()) {
         showERR()
     } else {
+        //  check for repeated screen death
         if (isSame()) {
             showERR()
         } else {
+            //  Add to score for success 
+            score += 1
             show()
         }
     }
@@ -229,16 +226,23 @@ function checkState() {
 let score = 0
 let result: boolean[] = []
 let count = 0
-let playerLives = 3
+let playerLives = 4
 let powerUps = 3
-let lifeChart: Image = null
+let ledArray: Image = null
 let errMask: Image = null
 let ledBlank: Image = null
 let logo: boolean[] = []
 let deadstate: boolean[] = []
 let priorstate: boolean[] = []
 let state: boolean[] = []
-lifeChart = images.createImage(`
+
+let enabled: boolean = true
+let disabled: boolean = false
+let inShake: boolean = disabled
+let inButton1: boolean = disabled
+let inButton2: boolean = disabled
+
+ledArray = images.createImage(`
     . . . . .
     . . . . .
     . . . . .
@@ -266,8 +270,11 @@ ledBlank = images.createImage(`
 // deadstate is ALL dead
 // priorstate is used to check if pattern is stable.   universe size apparently prevents blinkers
 // false means dead, true means live.
+// logo is used as template for flickerlogo  and to match for extra life bonus 
+
 state = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 deadstate  = state.slice()
+priorstate = state.slice()
 logo = [false, true, true, true, false, true, false, false, false, true, true, true, false, true, true, true, false, false, false, true, false, true, true, true, false]
 
 // Initial reset & show
