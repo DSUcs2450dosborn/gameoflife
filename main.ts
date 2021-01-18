@@ -24,18 +24,24 @@ function setState(arr: boolean[], x: number, y: number, value: boolean): void {
 }
 
 function flickerLogo () {
-    for (let x22 = 0; x22 <= 4; x22++) {
-        for (let y22 = 0; y22 <= 4; y22++) {
-            if (getState(logo, x22, y22)) {
-                led.plotBrightness(x22, y22, randint(128, 255)) 
-                basic.pause(20)              
-            } else {
-                led.plotBrightness(x22, y22, randint(16, 92))
-                basic.pause(20)                    
-            } 
+    for (let x = 0; x <= 15; x++) {
+        if (input.isGesture(Gesture.Shake)) {
+            x=15
+            ledBlank.plotImage(0);
+            break;
+        }
+        for (let x22 = 0; x22 <= 4; x22++) {
+            for (let y22 = 0; y22 <= 4; y22++) {
+                if (getState(logo, x22, y22)) {
+                    led.plotBrightness(x22, y22, randint(128, 255)) 
+                    basic.pause(20)              
+                } else {
+                    led.plotBrightness(x22, y22, randint(16, 92))
+                    basic.pause(20)                    
+                } 
+            }
         }
     }
-
 }
 
 // Core function
@@ -133,8 +139,10 @@ function show () {
 }
 // blink INVERSE of the lifeChart based on the state
 function showERR () {
+
     for (let x22 = 0; x22 <= 4; x22++) {
         for (let y22 = 0; y22 <= 4; y22++) {
+            lifeChart.setPixel(x22, y22, getState(priorstate, x22, y22));
             if (getState(priorstate, x22, y22)) {
                 errMask.setPixel(x22, y22, false );
             } else {
@@ -142,12 +150,8 @@ function showERR () {
             }
         }
     }
+
     errMask.plotImage(0);
-    for (let x2 = 0; x2 <= 4; x2++) {
-        for (let y2 = 0; y2 <= 4; y2++) {
-            lifeChart.setPixel(x2, y2, getState(state, x2, y2));
-        }
-    }
     lifeChart.plotImage(0);
     basic.pause(125)
     errMask.plotImage(0);
@@ -157,20 +161,14 @@ function showERR () {
     errMask.plotImage(0);
     basic.pause(125)
     ledBlank.plotImage(0);
+
     playerLives -=1
     debugger;
     basic.pause(500)
     if ( playerLives < 1) {
         basic.showString("AGE:")
         basic.showNumber(score)
-        for (let x = 0; x <= 25; x++) {
-            if (input.isGesture(Gesture.Shake)) {
-                x=25
-                ledBlank.plotImage(0);
-                break;
-            }
-            flickerLogo()
-        }
+        flickerLogo()       
     } else {
         basic.pause(80)
         reset()
