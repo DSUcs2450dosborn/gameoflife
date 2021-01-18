@@ -117,10 +117,10 @@ input.onButtonPressed(Button.A, function () {
 input.onButtonPressed(Button.B, function () {
     if ( powerUps > 0) {
         powerUps -= 1
-//        if (playerLives > 0) {
+        if (playerLives > 0) {
             reset()
             show()
-//        }
+        }
     }
 })
 
