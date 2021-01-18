@@ -30,14 +30,21 @@ function flickerLogo () {
             ledBlank.plotImage(0);
             break;
         }
+        if (x==15){
+            ledBlank.plotImage(0);
+        }
         for (let x22 = 0; x22 <= 4; x22++) {
             for (let y22 = 0; y22 <= 4; y22++) {
                 if (getState(logo, x22, y22)) {
                     led.plotBrightness(x22, y22, randint(128, 255)) 
                     basic.pause(20)              
                 } else {
-                    led.plotBrightness(x22, y22, randint(16, 92))
-                    basic.pause(20)                    
+                    if (x==15){
+                        led.plotBrightness(x22, y22, 0)
+                    } else {
+                        led.plotBrightness(x22, y22, randint(16, 92))
+                        basic.pause(20) 
+                    }                   
                 } 
             }
         }
