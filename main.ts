@@ -244,5 +244,6 @@ logo = [false, true, true, true, false, true, false, true, false, true, true, fa
 
 // Initial reset & show
 flickerLogo()
+basic.pause(2000) 
 reset()
 show()
