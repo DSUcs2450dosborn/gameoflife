@@ -1,6 +1,14 @@
 
 > Open this page at [https://dsucs2450dosborn.github.io/gameoflife/](https://dsucs2450dosborn.github.io/gameoflife/)
 
+## Overview
+This is an adaptation of the Conway Game of Life demonstration project available @
+Player uses button A to cycle the LED "universe" to the next "Conway stage".
+Cycling to an empty universe or when the next cycle will duplicate the current costs 1 of the players 5 lives
+Players can avoid the "death penalty" 3 times by using button B to trigger a reset.
+Players start with 3 resets, but can earn extras if the current universe pattern matches the game logo
+After all player deaths are exhausted, a new game can be started by shaking the unit when the logo is displayed
+
 ## Use as Extension
 
 This repository can be added as an **extension** in MakeCode.
