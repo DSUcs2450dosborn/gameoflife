@@ -174,7 +174,7 @@ function showERR () {
     debugger;
     basic.pause(500)
     if ( playerLives < 1) {
-        basic.showString("AGE:")
+        basic.showString("WIN")
         basic.showNumber(score)
         flickerLogo()       
     } else {
@@ -253,7 +253,7 @@ ledBlank = images.createImage(`
 // false means dead, true means live.
 state = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 deadstate  = state.slice()
-logo = [false, true, true, true, false, true, false, true, false, true, true, false, false, false, true, true, false, true, false, true, false, true, true, true, false]
+logo = [false, true, true, true, false, true, false, false, false, true, true, true, false, true, true, true, false, false, false, true, false, true, true, true, false]
 
 // Initial reset & show
 flickerLogo()
