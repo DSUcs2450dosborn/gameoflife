@@ -39,6 +39,12 @@ function bTwoEnable(){
         inButton2 = enabled
     }
 }
+// reset score components after game reset
+function scoreReset() {
+    playerLives = 4
+    powerUps = 3
+    score = 0
+}
 // Generate inverse screen for flashing 
 function makeErrMask() {
     for (let x22 = 0; x22 <= 4; x22++) {
@@ -148,9 +154,7 @@ input.onButtonPressed(Button.B, function () {
 input.onGesture(Gesture.Shake, function () {	
     if (inShake) {
         inShake = disabled
-        playerLives = 4
-        powerUps = 3
-        score = 0
+        scoreReset()
         reset()
         show()
     } 
@@ -164,7 +168,6 @@ function show () {
         }
     }
     ledArray.plotImage(0);
-
     bOneEnable()
     bTwoEnable()
 }
@@ -244,17 +247,20 @@ function showScore() {
  * https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
  */
 let score = 0
-let result: boolean[] = []
+let playerLives = 0
+let powerUps = 0
+
 let count = 0
-let playerLives = 4
-let powerUps = 3
+
 let ledArray: Image = null
 let errMask: Image = null
 let ledBlank: Image = null
+
 let logo: boolean[] = []
 let deadstate: boolean[] = []
 let priorstate: boolean[] = []
 let state: boolean[] = []
+let result: boolean[] = []
 
 let enabled: boolean = true
 let disabled: boolean = false
@@ -300,5 +306,6 @@ logo = [false, true, true, true, false, true, false, false, false, true, true, t
 // Initial reset & show
 flickerLogo()
 basic.pause(2000) 
+scoreReset()
 reset()
 show()
