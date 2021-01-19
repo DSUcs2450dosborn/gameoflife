@@ -12,6 +12,7 @@ Cycling to an empty universe or when the next cycle will duplicate the current c
 Players can avoid the "death penalty" 3 times by using button B to trigger a universe reset.
 Players start with 3 resets, but can earn extras if the current universe pattern matches the game logo
 After all player deaths are exhausted, a new game can be started by shaking the unit after the logo is displayed
+High Score display available between games via A+B button press.
 
 ## Use as Extension
 
