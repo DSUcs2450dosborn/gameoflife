@@ -182,6 +182,7 @@ function reset () {
             setState(state, x, y, Math.randomBoolean());
         }
     }
+    scoreMult = 1
 }
 
 // Generate inverse screen for flashing 
@@ -218,6 +219,7 @@ function checkState() {
         makeErrMask()
         flashErr()
         reset()
+        scoreMult = 2
         show()
     }
     // check for empty screen death
@@ -231,7 +233,7 @@ function checkState() {
             showERR()
         } else {
             //  Add to score for success 
-            score += 1
+            score += scoreMult
             show()
         }
     }
@@ -253,6 +255,8 @@ function showScore() {
  * https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
  */
 let score = 0
+let scoreMult = 1
+
 let playerLives = 0
 let powerUps = 0
 
