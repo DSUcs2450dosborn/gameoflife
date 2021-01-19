@@ -45,6 +45,7 @@ function scoreReset() {
 }
 
 function flickerLogo () {
+    music.beginMelody(music.builtInMelody(Melodies.Entertainer), MelodyOptions.Once)
     for (let x = 0; x <= 5; x++) {
         if (x==5){
             ledBlank.plotImage(0);
@@ -120,6 +121,7 @@ function gameOfLife () {
 input.onButtonPressed(Button.A, function () {
     if ( inButton1 ){
         inButton1 = disabled
+        music.beginMelody(music.builtInMelody(Melodies.BaDing), MelodyOptions.Once)
         priorstate = state.slice()
         gameOfLife()
         checkState()
@@ -212,6 +214,7 @@ function flashErr(){
 function checkState() {
     // do free reset if current screen = logo
     if ( isLogo() ){
+        music.beginMelody(music.builtInMelody(Melodies.PowerUp), MelodyOptions.Once)
         makeErrMask()
         flashErr()
         reset()
@@ -219,10 +222,12 @@ function checkState() {
     }
     // check for empty screen death
     if (isDead()) {
+        music.beginMelody(music.builtInMelody(Melodies.Wawawawaa), MelodyOptions.Once)
         showERR()
     } else {
         //  check for repeated screen death
         if (isSame()) {
+            music.beginMelody(music.builtInMelody(Melodies.Wawawawaa), MelodyOptions.Once)
             showERR()
         } else {
             //  Add to score for success 
