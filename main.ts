@@ -121,7 +121,11 @@ function gameOfLife () {
 input.onButtonPressed(Button.A, function () {
     if ( inButton1 ){
         inButton1 = disabled
-        music.playTone(Note.C, 150)
+        if (scoreMult == 1){
+            music.playTone(Note.A, 150)
+        } else {
+            music.playTone(Note.C, 150)            
+        }
         priorstate = state.slice()
         gameOfLife()
         checkState()
@@ -132,11 +136,21 @@ input.onButtonPressed(Button.A, function () {
 input.onButtonPressed(Button.B, function () {
     if ( inButton2 ) {
         inButton2 = disabled
-        music.playTone(Note.D, 150)
+        music.playTone(Note.E, 150)
         powerUps -= 1
         reset()
         show()
     }
+})
+
+input.onButtonPressed(Button.AB, function () {
+    if ( inShake) {
+        ledBlank.plotImage(0);
+        music.beginMelody(music.builtInMelody(Melodies.JumpUp), MelodyOptions.Once)
+        basic.showString("High Score")
+        basic.showNumber(highScore)
+        flickerLogo()         
+    }	
 })
 
 input.onGesture(Gesture.Shake, function () {	
@@ -242,8 +256,8 @@ function checkState() {
 }
 
 function showScore() {
-        basic.showString("WIN")
         music.beginMelody(music.builtInMelody(Melodies.JumpUp), MelodyOptions.Once)
+        basic.showString("WIN")
         let bonus = input.temperature()*2
 //        basic.showNumber(bonus) 
         if (score >= bonus){
@@ -251,6 +265,9 @@ function showScore() {
             score = score * 2
         }
         basic.showNumber(score)
+        if (score > highScore) {
+            highScore = score 
+        }
         flickerLogo()    
         inShake = enabled  
 }
@@ -258,6 +275,7 @@ function showScore() {
  * https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
  */
 let score = 0
+let highScore = 0
 let scoreMult = 1
 
 let playerLives = 0
