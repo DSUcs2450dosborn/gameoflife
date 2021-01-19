@@ -54,7 +54,7 @@ function flickerLogo () {
             for (let y22 = 0; y22 <= 4; y22++) {
                 if (getState(logo, x22, y22)) {
                     if (x==5){
-                        led.plotBrightness(x22, y22, 128)
+                        led.plotBrightness(x22, y22, 64)
                     } else {
                         led.plotBrightness(x22, y22, randint(128, 255)) 
                         basic.pause(20) 
