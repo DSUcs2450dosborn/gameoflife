@@ -147,7 +147,7 @@ input.onButtonPressed(Button.AB, function () {
     if ( inShake) {
         ledBlank.plotImage(0);
         music.beginMelody(music.builtInMelody(Melodies.JumpUp), MelodyOptions.Once)
-        basic.showString("High Score")
+        basic.showString("Best")
         basic.showNumber(highScore)
         flickerLogo()         
     }	
