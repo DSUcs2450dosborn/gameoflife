@@ -11,12 +11,10 @@ function isDead () {
 }
 // compare array to prior
 function isSame () {
-    // debugger;
     return state.every((val, index) => val === priorstate[index])
 }
 // compare array to LOGO
 function isLogo () {
-    // debugger;
     return state.every((val, index) => val === logo[index])
 }
 // get current LED display
@@ -35,7 +33,7 @@ function bOneEnable(){
 }
 // Enable button 2
 function bTwoEnable(){
-    if (powerUps > 0){
+    if (powerUps > 0 && playerLives > 0){
         inButton2 = enabled
     }
 }
@@ -44,18 +42,6 @@ function scoreReset() {
     playerLives = 4
     powerUps = 3
     score = 0
-}
-// Generate inverse screen for flashing 
-function makeErrMask() {
-    for (let x22 = 0; x22 <= 4; x22++) {
-        for (let y22 = 0; y22 <= 4; y22++) {
-            if (getState(priorstate, x22, y22)) {
-                errMask.setPixel(x22, y22, false );
-            } else {
-                errMask.setPixel(x22, y22, true );
-            }
-        }
-    }
 }
 
 function flickerLogo () {
@@ -129,6 +115,7 @@ function gameOfLife () {
     // Update the state
     state = result
 }
+
 // Use button A for the next iteration of game of life
 input.onButtonPressed(Button.A, function () {
     if ( inButton1 ){
@@ -144,10 +131,8 @@ input.onButtonPressed(Button.B, function () {
     if ( inButton2 ) {
         inButton2 = disabled
         powerUps -= 1
-        if (playerLives > 0) {
-            reset()
-            show()
-        }
+        reset()
+        show()
     }
 })
 
@@ -171,6 +156,7 @@ function show () {
     bOneEnable()
     bTwoEnable()
 }
+
 // blink INVERSE of the lifeChart based on the state
 function showERR () {
     makeErrMask()
@@ -185,6 +171,7 @@ function showERR () {
         show()
     }
 }
+
 // Generate random initial state.
 function reset () {
     ledBlank.plotImage(0);
@@ -195,6 +182,20 @@ function reset () {
     }
 }
 
+// Generate inverse screen for flashing 
+function makeErrMask() {
+    for (let x22 = 0; x22 <= 4; x22++) {
+        for (let y22 = 0; y22 <= 4; y22++) {
+            if (getState(priorstate, x22, y22)) {
+                errMask.setPixel(x22, y22, false );
+            } else {
+                errMask.setPixel(x22, y22, true );
+            }
+        }
+    }
+}
+
+//  do inverse screeen flash effect 
 function flashErr(){
     errMask.plotImage(0);
     ledArray.plotImage(0);
