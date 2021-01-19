@@ -121,7 +121,7 @@ function gameOfLife () {
 input.onButtonPressed(Button.A, function () {
     if ( inButton1 ){
         inButton1 = disabled
-        music.beginMelody(music.builtInMelody(Melodies.BaDing), MelodyOptions.Once)
+        music.playTone(Note.C, 150)
         priorstate = state.slice()
         gameOfLife()
         checkState()
@@ -132,6 +132,7 @@ input.onButtonPressed(Button.A, function () {
 input.onButtonPressed(Button.B, function () {
     if ( inButton2 ) {
         inButton2 = disabled
+        music.playTone(Note.D, 150)
         powerUps -= 1
         reset()
         show()
@@ -141,6 +142,7 @@ input.onButtonPressed(Button.B, function () {
 input.onGesture(Gesture.Shake, function () {	
     if (inShake) {
         inShake = disabled
+        music.beginMelody(music.builtInMelody(Melodies.JumpUp), MelodyOptions.Once)
         scoreReset()
         reset()
         show()
@@ -241,6 +243,7 @@ function checkState() {
 
 function showScore() {
         basic.showString("WIN")
+        music.beginMelody(music.builtInMelody(Melodies.JumpUp), MelodyOptions.Once)
         let bonus = input.temperature()*2
 //        basic.showNumber(bonus) 
         if (score >= bonus){
