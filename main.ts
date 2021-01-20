@@ -169,12 +169,19 @@ input.onGesture(Gesture.Shake, function () {
 
 // Show the ledArray based on the state
 function show () {
+    ledBlank.plotImage(0);
+
     for (let x2 = 0; x2 <= 4; x2++) {
         for (let y2 = 0; y2 <= 4; y2++) {
-            ledArray.setPixel(x2, y2, getState(state, x2, y2));
+            if ( getState(state, x2, y2)){
+                led.plotBrightness(x2, y2, 128) 
+            } else {
+                if ( getState(priorstate, x2, y2)){
+                    led.plotBrightness(x2, y2, 32) 
+                }                
+            }
         }
     }
-    ledArray.plotImage(0);
     bOneEnable()
     bTwoEnable()
 }
@@ -203,6 +210,7 @@ function reset () {
         }
     }
     scoreMult = 1
+    priorstate = deadstate.slice()
 }
 
 // Generate inverse screen for flashing 
