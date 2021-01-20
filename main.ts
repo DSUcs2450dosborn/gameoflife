@@ -170,7 +170,6 @@ input.onGesture(Gesture.Shake, function () {
 // Show the ledArray based on the state
 function show () {
     ledBlank.plotImage(0);
-
     for (let x2 = 0; x2 <= 4; x2++) {
         for (let y2 = 0; y2 <= 4; y2++) {
             if ( getState(state, x2, y2)){
@@ -209,7 +208,6 @@ function reset () {
             setState(state, x, y, Math.randomBoolean());
         }
     }
-
     priorstate = deadstate.slice()
 }
 
