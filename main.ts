@@ -209,7 +209,7 @@ function reset () {
             setState(state, x, y, Math.randomBoolean());
         }
     }
-    scoreMult = 1
+
     priorstate = deadstate.slice()
 }
 
@@ -253,11 +253,13 @@ function checkState() {
     // check for empty screen death
     if (isDead()) {
         music.beginMelody(music.builtInMelody(Melodies.Wawawawaa), MelodyOptions.Once)
+        scoreMult = 1
         showERR()
     } else {
         //  check for repeated screen death
         if (isSame()) {
             music.beginMelody(music.builtInMelody(Melodies.Wawawawaa), MelodyOptions.Once)
+            scoreMult = 1
             showERR()
         } else {
             //  Add to score for success 
