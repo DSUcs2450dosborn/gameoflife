@@ -4,7 +4,8 @@
     "dependencies": {
         "core": "*",
         "microphone": "*",
-        "radio-broadcast": "*"
+        "radio-broadcast": "*",
+        "radio": "*"
     },
     "files": [
         "main.ts",

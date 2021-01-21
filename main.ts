@@ -292,8 +292,7 @@ function showScore() {
         basic.showNumber(score)
         if (score > highScore) {
             highScore = score 
-
-            radio.sendValue("name", highScore)
+            radio.sendValue(control.deviceName(), highScore)
         }
         flickerLogo()    
         inShake = enabled  
@@ -362,6 +361,7 @@ priorstate = state.slice()
 logo = [false, true, true, true, false, true, false, false, false, true, true, true, false, true, true, true, false, false, false, true, false, true, true, true, false]
 
 // Initial reset & show
+basic.showString(control.deviceName())
 flickerLogo()
 basic.pause(2000) 
 scoreReset()
