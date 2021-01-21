@@ -308,6 +308,9 @@ let score = 0
 let highScore = 0
 let scoreMult = 1
 
+radio.setTransmitPower(2)
+radio.setGroup(12)
+
 let playerLives = 0
 let powerUps = 0
 
