@@ -262,13 +262,17 @@ function checkState() {
     }
     // check for empty screen death
     if (isDead()) {
-        music.beginMelody(music.builtInMelody(Melodies.Wawawawaa), MelodyOptions.Once)
+        if (playerLives>1){
+            music.beginMelody(music.builtInMelody(Melodies.Wawawawaa), MelodyOptions.Once)
+        }
         scoreMult = 1
         showERR()
     } else {
         //  check for repeated screen death
         if (isSame()) {
-            music.beginMelody(music.builtInMelody(Melodies.Wawawawaa), MelodyOptions.Once)
+            if (playerLives>1){
+                music.beginMelody(music.builtInMelody(Melodies.Wawawawaa), MelodyOptions.Once)
+            }
             scoreMult = 1
             showERR()
         } else {
