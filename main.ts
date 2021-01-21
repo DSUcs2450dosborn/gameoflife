@@ -195,9 +195,21 @@ function showERR () {
         showScore()
     } else {
         basic.pause(80)
+        flashLives()
         reset()
         show()
     }
+}
+
+// flashlives   animate side led columns to display "life remaining "
+function flashLives() {
+    ledBlank.plotImage(0);
+    for (let x = 0; x <= 1; x++) {
+        for (let y = 4; y >= (5-playerLives); y--) { 
+            led.plotBrightness(x, y, 128) 
+        }
+    }
+    basic.pause(1500)
 }
 
 // Generate random initial state.
@@ -267,6 +279,7 @@ function checkState() {
     }
 }
 
+
 function showScore() {
         music.beginMelody(music.builtInMelody(Melodies.JumpUp), MelodyOptions.Once)
         basic.showString("WIN")
@@ -279,6 +292,8 @@ function showScore() {
         basic.showNumber(score)
         if (score > highScore) {
             highScore = score 
+
+            radio.sendValue("name", highScore)
         }
         flickerLogo()    
         inShake = enabled  
