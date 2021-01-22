@@ -71,8 +71,9 @@ function flickerLogo () {
         }
     }
     basic.pause(2000)
-    ledBlank.plotImage(0);
-    while(playerLives < 1) {
+    debugger
+    while(inShake) {
+        ledBlank.plotImage(0);
         led.plotBrightness(2,2,64)
         basic.pause(250)
         led.plotBrightness(2,2,0) 
@@ -167,6 +168,7 @@ input.onButtonPressed(Button.AB, function () {
 
 input.onGesture(Gesture.Shake, function () {	
     if (inShake) {
+        basic.pause(1000)
         inShake = disabled
         music.beginMelody(music.builtInMelody(Melodies.JumpUp), MelodyOptions.Once)
         scoreReset()
@@ -293,21 +295,21 @@ function checkState() {
 
 
 function showScore() {
-        music.beginMelody(music.builtInMelody(Melodies.JumpUp), MelodyOptions.Once)
-        basic.showString("WIN")
-        let bonus = input.temperature()*2
+    music.beginMelody(music.builtInMelody(Melodies.JumpUp), MelodyOptions.Once)
+    basic.showString("WIN")
+    let bonus = input.temperature()*2
 //        basic.showNumber(bonus) 
-        if (score >= bonus){
-            basic.showString("x2")
-            score = score * 2
-        }
-        basic.showNumber(score)
-        if (score > highScore) {
-            highScore = score 
-            radio.sendValue(control.deviceName(), highScore)
-        }
-        flickerLogo()    
-        inShake = enabled  
+    if (score >= bonus){
+        basic.showString("x2")
+        score = score * 2
+    }
+    basic.showNumber(score)
+    if (score > highScore) {
+        highScore = score 
+        radio.sendValue(control.deviceName(), highScore)
+    }
+    inShake = enabled  
+    flickerLogo()    
 }
 /**
  * https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
