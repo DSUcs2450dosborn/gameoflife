@@ -56,20 +56,28 @@ function flickerLogo () {
                     if (x==5){
                         led.plotBrightness(x22, y22, 64)
                     } else {
-                        led.plotBrightness(x22, y22, randint(128, 255)) 
+                        led.plotBrightness(x22, y22, randint(64, 128)) 
                         basic.pause(20) 
                     }              
                 } else {
                     if (x==5){
                         led.plotBrightness(x22, y22, 0)
                     } else {
-                        led.plotBrightness(x22, y22, randint(16, 64))
+                        led.plotBrightness(x22, y22, randint(0, 32))
                         basic.pause(20) 
                     }                   
                 } 
             }
         }
     }
+    basic.pause(2000)
+    ledBlank.plotImage(0);
+    while(true) {
+        led.plotBrightness(2,2,64)
+        basic.pause(250)
+        led.plotBrightness(2,2,0) 
+        basic.pause(250)
+    }       
 }
 
 // Core function
