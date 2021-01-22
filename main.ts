@@ -72,7 +72,7 @@ function flickerLogo () {
     }
     basic.pause(2000)
     ledBlank.plotImage(0);
-    while(true) {
+    while(playerLives < 1) {
         led.plotBrightness(2,2,64)
         basic.pause(250)
         led.plotBrightness(2,2,0) 
