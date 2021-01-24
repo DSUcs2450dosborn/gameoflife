@@ -183,12 +183,8 @@ function show () {
     for (let x2 = 0; x2 <= 4; x2++) {
         for (let y2 = 0; y2 <= 4; y2++) {
             if ( getState(state, x2, y2)){
-                led.plotBrightness(x2, y2, 164) 
-            } else {
-                if ( getState(priorstate, x2, y2)){
-                    led.plotBrightness(x2, y2, 16) 
-                }                
-            }
+                led.plotBrightness(x2, y2, 128) 
+            } 
         }
     }
     bOneEnable()
