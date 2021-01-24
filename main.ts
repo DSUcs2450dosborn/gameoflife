@@ -215,6 +215,11 @@ function flashLives() {
             led.plotBrightness(x, y, 128) 
         }
     }
+    for (let x = 3; x <= 4; x++) {
+        for (let y = 3; y >= (4-powerUps); y--) { 
+            led.plotBrightness(x, y, 128) 
+        }
+    }
     basic.pause(1500)
 }
 
