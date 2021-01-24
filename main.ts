@@ -232,6 +232,7 @@ function reset () {
         }
     }
     priorstate = deadstate.slice()
+    sendState = state.slice()
 }
 
 // Generate inverse screen for flashing 
@@ -294,6 +295,10 @@ function checkState() {
     }
 }
 
+function stateToString(){
+    let sendString = "+++++++++++++++++++++++++"
+    return sendString
+}
 
 function showScore() {
     music.beginMelody(music.builtInMelody(Melodies.JumpUp), MelodyOptions.Once)
@@ -308,6 +313,7 @@ function showScore() {
     if (score > highScore) {
         highScore = score 
         radio.sendValue(control.deviceName(), highScore)
+        radio.sendString(stateToString())
     }
     inShake = enabled  
     flickerLogo()    
@@ -327,6 +333,7 @@ let powerUps = 0
 
 let count = 0
 
+
 let ledArray: Image = null
 let errMask: Image = null
 let ledBlank: Image = null
@@ -336,6 +343,7 @@ let deadstate: boolean[] = []
 let priorstate: boolean[] = []
 let state: boolean[] = []
 let result: boolean[] = []
+let sendState: boolean[] = []
 
 let enabled: boolean = true
 let disabled: boolean = false
