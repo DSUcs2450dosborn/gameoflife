@@ -296,7 +296,7 @@ function checkState() {
 }
 
 function stateToString(){
-    let sendString = "+++++++++++++++++++++++++"
+    let sendString = "+1++1+++1+++1++1+111++++++"
     return sendString
 }
 
