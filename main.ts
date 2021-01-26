@@ -296,8 +296,10 @@ function checkState() {
 }
 
 function stateToString(){
-    let sendString = "+1++1+++1+++1++1+111++++++"
-    return sendString
+    let sendString = "1011011101111011111001010"
+    let biN = parseInt(sendString, 2).toString()
+    let heX = parseInt(biN,16).toString()
+    return heX
 }
 
 function showScore() {
